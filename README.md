@@ -19,8 +19,28 @@ Hough Line Transform (probabilistic version)을 사용하면, 다음과 같은 �
 
 # Lane Detection v2
 
-라라라라
+TODO:
+차선이 탐지되지 않는 경우 (한쪽 또는 양쪽 모두), 이전에 탐지한 차선을 재사용 하는 것으로 설정
+차선탐지를 시작한 이후로 한번도 탐지되지 않으면, 이전에 탐지한 차선이 없어서 재사용 할 수가 없으므로, 이 경우에는 Frame Mask를 이전에 탐지한 차선으로 가정하고 사용한다.
+
+아직, 양 차선의 중심과, 내 차량의 중심을 계산하는 것은 구현하지 말기 (v3 에서 구현)
+오랫동안 차선이 탐지되지 않으면, 결국 잘못된 운전을 할 수 있는데, 그건 어떻하나...?
 
 # Lane Detection v3
 
-호호호호
+TODO:
+(이제는 어떤 경우에도 양쪽 차선을 찾을 수 있다. 최악의 경우 Frame Mask를 쓰면 되니까...)
+Hough Transform을 쓰면 차선의 일부만 찾을 수 있는 단점이 있는데, 이를 개선하기 위해서 numpy polyfit을 이용해서, 차선을 이어서 그리는 것으로 수정
+v3에서는 ax+b 로만 fitting
+
+# Lane Detection v4
+
+TODO:
+v3를 개선해서 polyfit, degree=2로 fitting 하기
+Degree가 2보다 커지는건 큰 의미가 없다고 생각함
+Degree=2로 fitting 할때, Hough Transf이 찾은 선에서 추가로 많은 점을 sampling 한 후, fitting을 해야지, 안그러면 degree=2 fitting 결과가 이상하게 나오는 경우가 종종 발생한다.
+
+# Lane Detection v5
+
+TODO: 로로로로후후후후
+
