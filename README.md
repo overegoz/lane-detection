@@ -33,10 +33,12 @@ TODO:
 Hough Transform을 쓰면 차선의 일부만 찾을 수 있는 단점이 있는데, 이를 개선하기 위해서 numpy polyfit을 이용해서, 차선을 이어서 그리는 것으로 수정
 v3에서는 ax+b 로만 fitting
 
+탐지한 차선의 중심과, 내 차량의 중심이 얼마나 차이가 나는지도 화면에 출력하자
+
 # Lane Detection v4
 
 TODO:
-v3를 개선해서 polyfit, degree=2로 fitting 하기
+v3를 개선해서 polyfit, degree=2로 fitting 하기 (ax^2+bx+c)
 Degree가 2보다 커지는건 큰 의미가 없다고 생각함
 Degree=2로 fitting 할때, Hough Transf이 찾은 선에서 추가로 많은 점을 sampling 한 후, fitting을 해야지, 안그러면 degree=2 fitting 결과가 이상하게 나오는 경우가 종종 발생한다.
 
