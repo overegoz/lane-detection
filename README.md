@@ -27,8 +27,9 @@ Hough Tranf 으로 탐지한 차선에다가 poly fitting (1-d, ax+b)을 해서 
 
 ![Result-v1](./v2-out-imgs/detection-result.png)
 
-TODO: 노트북에 보면 Error (left) 또는 Error (right) 라는 출력 메시지가 있는데, 이 부분은 해당 차선이 탐지되지 않아서 오류가 발생한 것이다. Hough 가 차선을 아예 탐지하지 못하면 poly fitting은 동작하지 않는다. 여기를 고치자!
-TODO: poly fitting 하면, 이 과정에서 시간이 너무 많이 소요 될 수 있다. 이 부분도 꼭 확인하자
+TODO: 
+* 노트북에 보면 Error (left) 또는 Error (right) 라는 출력 메시지가 있는데, 이 부분은 해당 차선이 탐지되지 않아서 오류가 발생한 것이다. Hough 가 차선을 아예 탐지하지 못하면 poly fitting은 동작하지 않는다=> 여기를 고치자!!
+* poly fitting 하면, 이 과정에서 시간이 너무 많이 소요 될 수 있다. 이 부분도 꼭 확인하자
 
 # Lane Detection v3
 v2랑 알고리즘은 동일
@@ -47,11 +48,12 @@ TODO:
 (이제는 어떤 경우에도 양쪽 차선을 찾을 수 있다. 최악의 경우 Frame Mask를 쓰면 되니까...)
 
 TODO:
-polyfit, degree=2로 fitting 하기 (ax^2+bx+c)
-Degree가 2보다 커지는건 큰 의미가 없다고 생각함
-Degree=2로 fitting 할때, Hough Transf이 찾은 선에서 추가로 많은 점을 sampling 한 후, fitting을 해야지, 안그러면 degree=2 fitting 결과가 이상하게 나오는 경우가 종종 발생한다.
+* polyfit, degree=2로 fitting 하기 (ax^2+bx+c)
+  * Degree가 2보다 커지는건 큰 의미가 없다고 생각함
+* Degree=2로 fitting 할때, Hough Transf이 찾은 선에서 추가로 많은 점을 sampling 한 후, fitting을 해야지, 안그러면 degree=2 fitting 결과가 이상하게 나오는 경우가 종종 발생한다.
 
 # Lane Detection v5
 
-TODO: 로로로로후후후후
+TODO: 
+* 로로로로후후후후
 
