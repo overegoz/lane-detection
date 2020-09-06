@@ -2,6 +2,8 @@
 
 V1 : 기본적인 Lane Detection (차선 탐지) 알고리즘을 구현한 버전
 
+![Result-v1](./v1-out-imgs/detection-result.png)
+
 V1의 문제점
 차선탐지를 이용해서 자율주행을 할 때는, 아래와 같이 동작함
 1) 양쪽의 차선을 탐지
@@ -16,6 +18,8 @@ Hough Line Transform (probabilistic version)을 사용하면, 다음과 같은 �
 또한, 한쪽 차선 또는 모든 차선이 탐지되지 않는 경우가 발생할 수 있다.
 
 이러한 문제를 개선하기 위해, 앞으로 차선탐지 알고리즘 v2, v3...을 만들것임.
+
+참고: 몇장의 사진에서 Type Error가 발생하는데... 이유는??
 
 # Lane Detection v2
 
