@@ -29,6 +29,7 @@ Hough Tranf 으로 탐지한 차선에다가 poly fitting (1-d, ax+b)을 해서 
 TODO: 
 * 노트북에 보면 Error (left) 또는 Error (right) 라는 출력 메시지가 있는데, 이 부분은 해당 차선이 탐지되지 않아서 오류가 발생한 것이다. Hough 가 차선을 아예 탐지하지 못하면 poly fitting은 동작하지 않는다=> 여기를 고치자!!
 * poly fitting 하면, 이 과정에서 시간이 너무 많이 소요 될 수 있다. 이 부분도 꼭 확인하자
+* poly fitting 결과가 image 를 벗어하는 경우가 발생하네... 이미지를 벗어나지 않도록 수정하기
 
 # Lane Detection v3
 v2랑 알고리즘은 동일
