@@ -24,7 +24,7 @@ TODO: 몇장의 사진에서 Type Error가 발생하는데... 이유는??
 
 Hough Tranf 으로 탐지한 차선에다가 poly fitting (1-d, ax+b)을 해서 차선이 화면 가장 아래에서 부터, 화면 중간 정도까지 이어지도록 만들었음.
 
-![Result-v1](./v2-out-imgs/detection-result.png)
+![Result-v2](./v2-out-imgs/detection-result.png)
 
 TODO: 
 * 노트북에 보면 Error (left) 또는 Error (right) 라는 출력 메시지가 있는데, 이 부분은 해당 차선이 탐지되지 않아서 오류가 발생한 것이다. Hough 가 차선을 아예 탐지하지 못하면 poly fitting은 동작하지 않는다=> 여기를 고치자!!
@@ -34,10 +34,14 @@ TODO:
 # Lane Detection v3
 v2랑 알고리즘은 동일
 
+![Result-v3](./v3-out-imgs/detection-result.png)
+
 TODO: 차선 탐지 알고리즘 개선
 * 차선이 탐지되지 않는 경우 (한쪽 또는 양쪽 모두), 이전에 탐지한 차선을 재사용 하는 것으로 구현
   * 차선탐지를 시작한 이후로 한번도 탐지되지 않으면, 이전에 탐지한 차선이 없어서 재사용 할 수가 없으므로, 이 경우에는 Frame Mask를 이전에 탐지한 차선으로 가정하고 사용한다.
   * 너무 오랫동안 차선이 탐지되지 않으면, 옛날에 탐지한 차선을 계속 하용할텐데? TTL(time to live) 개념을 적용해서, 차선이 탐지 안되면, 직전에 탐지한 차선을 쓰되, 시간이 지나면 서서히 Frame Mask 쪽으로 옮겨 가도록 구현하자.
+
+구현완료:
 * 양 차선의 중심과, 내 차량의 중심을 계산하여 얼마나 벗어나 있는지 체크
   * 양 차선의 중심 : poly fitting 한 두개의 선의 중심
   * 내 차의 중심 : 화면 최 하단에서, x의 중심
