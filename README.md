@@ -1,4 +1,6 @@
-# Lane Detection v1
+# Hough Tranform을 이용해서 차선 탐지 알고리즘을 구현하고, 개선하기
+
+## Lane Detection v1
 
 V1 : 기본적인 Lane Detection (차선 탐지) 알고리즘을 구현한 버전(Hough Line Detection, prob) // 참고: 온라인에서 찾은 tutorial을 기반으로 구현함. Tutorial 주소는 v1 노트북에서 확인할 수 있음.
 
@@ -20,7 +22,7 @@ V1 : 기본적인 Lane Detection (차선 탐지) 알고리즘을 구현한 버�
 
 TODO: 몇장의 사진에서 Type Error가 발생하는데... 이유는??
 
-# Lane Detection v2
+## Lane Detection v2
 
 Hough Tranf 으로 탐지한 차선에다가 poly fitting (1-d, ax+b)을 해서 차선이 화면 가장 아래에서 부터, 화면 중간 정도까지 이어지도록 만들었음.
 
@@ -31,7 +33,7 @@ TODO:
 * poly fitting 하면, 이 과정에서 시간이 너무 많이 소요 될 수 있다. 이 부분도 꼭 확인하자
 * poly fitting 결과가 image 를 벗어하는 경우가 발생하네... 이미지를 벗어나지 않도록 수정하기
 
-# Lane Detection v3
+## Lane Detection v3
 v2랑 알고리즘은 동일
 
 ![Result-v3](./v3-out-imgs/detection-result.png)
@@ -45,7 +47,7 @@ v2랑 알고리즘은 동일
   * 내 차의 중앙을 녹색의 'x'로,
   * 둘 간의 차이를 고려해서, 차의 핸들을 어느 방향으로 꺾어야 하는지
 
-# Lane Detection v4
+## Lane Detection v4
 v3랑 알고리즘은 동일
 
 TODO: 차선 탐지 알고리즘 개선
@@ -53,7 +55,7 @@ TODO: 차선 탐지 알고리즘 개선
   * 차선탐지를 시작한 이후로 한번도 탐지되지 않으면, 이전에 탐지한 차선이 없어서 재사용 할 수가 없으므로, 이 경우에는 Frame Mask를 이전에 탐지한 차선으로 가정하고 사용한다.
   * 너무 오랫동안 차선이 탐지되지 않으면, 옛날에 탐지한 차선을 계속 하용할텐데? TTL(time to live) 개념을 적용해서, 차선이 탐지 안되면, 직전에 탐지한 차선을 쓰되, 시간이 지나면 서서히 Frame Mask 쪽으로 옮겨 가도록 구현하자.
 
-# Lane Detection v5
+## Lane Detection v5
 
 TODO:
 (이제는 어떤 경우에도 양쪽 차선을 찾을 수 있다. 최악의 경우 Frame Mask를 쓰면 되니까...)
@@ -63,7 +65,7 @@ TODO:
   * Degree가 2보다 커지는건 큰 의미가 없다고 생각함
 * Degree=2로 fitting 할때, Hough Transf이 찾은 선에서 추가로 많은 점을 sampling 한 후, fitting을 해야지, 안그러면 degree=2 fitting 결과가 이상하게 나오는 경우가 종종 발생한다.
 
-# Lane Detection v6
+## Lane Detection v6
 
 TODO: 
 * 로로로로후후후후
