@@ -1,4 +1,5 @@
 # Hough Tranform을 이용해서 차선 탐지 알고리즘을 구현하고, 개선하기
+T. Kim
 
 ## Lane Detection v1
 
