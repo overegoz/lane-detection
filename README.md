@@ -63,13 +63,16 @@ TODO
 
 ## Lane Detection v5
 
-TODO:
 (이제는 어떤 경우에도 양쪽 차선을 찾을 수 있다. 최악의 경우 Frame Mask를 쓰면 되니까...)
 
-TODO:
+![Result-v5](./v5-out-imgs/detection-result.png)
+
+구현 완료
 * polyfit, degree=2로 fitting 하기 (ax^2+bx+c)
   * Degree가 2보다 커지는건 큰 의미가 없다고 생각함
 * Degree=2로 fitting 할때, Hough Transf이 찾은 선에서 추가로 많은 점을 sampling 한 후, fitting을 해야지, 안그러면 degree=2 fitting 결과가 이상하게 나오는 경우가 종종 발생한다.
+
+탐지한 차선을 보면, 대부분의 경우에는 이전의 알고리즘과 별로 다르지 않을 것이다. 나중에 곡선이 등장하는 영상을 입력으로 주고, v5가 곡선 형태로 차선을 탐지할 수 있는지를 확인하자
 
 ## Lane Detection v6
 
