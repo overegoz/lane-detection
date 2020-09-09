@@ -1,4 +1,3 @@
-
 # Created by https://www.toptal.com/developers/gitignore/api/jupyternotebooks
 # Edit at https://www.toptal.com/developers/gitignore?templates=jupyternotebooks
 
@@ -10,7 +9,7 @@
 */.ipynb_checkpoints/*
 
 __pycache__
-
+*/__pycache__/*
 
 # Remove previous ipynb_checkpoints
 #   git rm -r .ipynb_checkpoints/
