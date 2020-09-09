@@ -5,8 +5,7 @@
   * TTL 개념을 적용하는 부분 미 구현 (차선 탐지가 안되면, 직전에 탐지한 차선을 사용하는데, 너무 오랫동안 차선 탐지가 안되면 아주 옛날에 탐지한 차선을 사용하게 되는거니까, 차선 미 탐지 기간이 길어지면, 서서히 frame mask 의 line으로 확장해 가는 알고리즘)
 
 * 전체 운전 영상 (set1-driving-full.mp4)에 대해서 차선 탐지 알고리즘을 적용해 보고, 알고리즘 개선이 필요한지 확인하기
-
-[Full Driving Video](https://hallymackr-my.sharepoint.com/:v:/g/personal/tkim_hallymackr_onmicrosoft_com/ESzF8GNrz-pAmnYmNBgNLLYB0aKXl51CJZtXF5gV2umIrA?e=UE7Fvu)
+  * [Full Driving Video, set1-driving-full.mp4](https://hallymackr-my.sharepoint.com/:v:/g/personal/tkim_hallymackr_onmicrosoft_com/ESzF8GNrz-pAmnYmNBgNLLYB0aKXl51CJZtXF5gV2umIrA?e=UE7Fvu)
 
 * 주의
   * version이 증가해 가면 점진적으로 개선사항이 있다는 것이다.
