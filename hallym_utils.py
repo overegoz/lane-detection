@@ -140,14 +140,15 @@ def read_image_frames(dir_path_img_frames_read, target_height, target_width):
     col_images=[]
     for i in tqdm_notebook(col_frames):
         img = cv2.imread(dir_path_img_frames_read + i)
-        col_images.append(img)
 
-    # 이미지를 고정된 크기로 변경
-    # 입력으로 들어오는 이미지가, 내가 원하는 크기가 아니면, 내가 원하는 크기로 변경
-    img = col_images[0]
-    height, width = img.shape[:2]
-    if (height != target_height) or (width != target_width):
-        img = img.resize(img, dsize=(target_width, target_height))
+        # 이미지를 고정된 크기로 변경
+        # 입력으로 들어오는 이미지가, 내가 원하는 크기가 아니면, 내가 원하는 크기로 변경
+        height, width = img.shape[:2]
+        if (height != target_height) or (width != target_width):
+            #img = img.resize(img, dsize=(target_width, target_height))
+            img = cv2.resize(img, dsize=(target_width, target_height))
+            
+        col_images.append(img)
 
     # 읽어온 사진 파일 검증
     num_images = len(col_images)
