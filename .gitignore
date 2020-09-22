@@ -15,6 +15,8 @@ __pycache__
 #   git rm -r .ipynb_checkpoints/
 
 # too large files are not allowed to be uploaded to the git repo
-resource/set1/set1-driving-full.mp4
+resource/driving-full.mp4
+resource/set2/*.mp4
+*.mp4
 
 # End of https://www.toptal.com/developers/gitignore/api/jupyternotebooks

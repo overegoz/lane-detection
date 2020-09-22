@@ -14,6 +14,9 @@ target_height = 270
 target_width = 480
 
 """
+<입력 영상에 따라서 튜닝이 필요한 부분이다. 카메라가 도로를 어떤 각도에서 바라보고 있는지에
+따라서 Frame Mask를 다르게 설정해야 한다.>
+
 Frame mask 라는 것을 만들어서, 이미지에 덮어 씌운 다음에 mask 밖의 그림은 다 지워버리고 
 mask 내부의 그림만 이용해서 차선을 탐지할 것이다. 이때 frame mask 크기를 얼마로 할 것인지를
 설정하기 위해서 frame 왼쪽의 하단, 상단, 그리고 frame 오른쪽의 상단, 하단의 좌표를
@@ -24,6 +27,38 @@ mask_left_top = [220, 160]
 mask_right_top = [360, 160]
 mask_right_bottom = [target_width, target_height]
 
+"""
+<입력 영상에 따라서 튜닝이 필요할 수도 있는 부분이다.>
+
+slope-max/min값은 상황에 따라서 약간의 튜닝이 필요할 수도 있다.
+정해진 max/min 범위를 벗어하는 선은, 잘못 탐지된 선으로 보인다.
+그래서, 일정 기울기를 넘어서거나 또는 이하인 선들은 모두 제거하는 방식으로 수정했다.
+"""
+slope_max = 5
+slope_min = -1 * slope_max
+
+"""
+각종 경로 설정하기
+"""
+def set_paths(version, dataset):
+    # 이미지 파일로 저장된, 도로 사진 : 입력
+    dir_path_img_frames_read = 'resource/' + dataset + '/frames_in/'
+    if os.path.isdir(dir_path_img_frames_read) == False:
+        assert False, '입력용 이미지가 저장된 폴더를 찾을 수 없습니다.'
+
+    # 여기 구현된 알고리즘으로 차선 탐지가 된 도로 사진을 저장할 폴더 : 출력
+    dir_path_img_frames_write = 'resource/' + dataset + '/frames1_out-v' + version + '/'
+    if os.path.isdir(dir_path_img_frames_write) == False:
+        os.mkdir(dir_path_img_frames_write)  # 디렉토리가 존재하지 않으면 생성
+
+    print(dir_path_img_frames_write , ' 폴더에 결과물을 저장합니다.')
+
+    # 차선 탐지가 된 도로 사진을 동영상으로 만들어서 저장할 결과물
+    dir_path_video_out = 'resource/' + dataset + '/'
+    video_out_filename = dataset + '-output-v' + version + '.mp4'
+    print(video_out_filename, ' 동영상 파일이 생성될 것 입니다.')
+    
+    return dir_path_img_frames_read, dir_path_img_frames_write, dir_path_video_out, video_out_filename
 
 """
 아무런 차선도 탐지하지 못한 경우에는 직전에 탐지한 차선을 재사용하는데,
