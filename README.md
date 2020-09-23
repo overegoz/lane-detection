@@ -21,7 +21,7 @@
 * 우리가 제안한 내용
   * Hough Transform을 기반으로 poly-fitting을 통해 차선을 완전히 탐지하는 기법 제안
   * 일부 사진/frame에서 차선을 탐지하지 못하는 경우 발생 시, 직전에 탐지한 차선을 재 사용하는 기법 제안
-  * Hough Transform 이 탐지한 선 중에서, slope를 계산해서, 잘못 탐지한 차선을 제거하는 기법 제안
+  * Hough Transform 이 탐지한 선 각각에 대해서 slope를 계산하고, 이를 이용해서 잘못 탐지한 차선을 제거하는 기법 제안
 
 ## Lane Detection v1
 
