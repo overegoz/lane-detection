@@ -33,7 +33,9 @@ version = '5'
 
 #dataset = 'set1'
 #dataset = 'set2'
-dataset = 'set3'
+#dataset = 'set3'
+#dataset = 'set4'
+dataset = 'set5'
 
 dir_path_img_frames_read, dir_path_img_frames_write, dir_path_video_out, video_out_filename = hu.set_paths(version, dataset)
 
@@ -235,8 +237,8 @@ for img in tqdm_notebook(col_images):  # 각각의 도로 사진에 대해서...
         """
         print('Type Error가 발생했습니다.')
         print('Error at INDEX : ', cnt)
-        plt.imshow(dmy)
-        plt.show()        
+        #plt.imshow(dmy)
+        #plt.show()        
         #assert False, "Type Error 가 발생했습니다."
 
     cnt+= 1
