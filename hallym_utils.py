@@ -33,8 +33,10 @@ mask_right_bottom = [target_width, target_height]
 slope-max/min값은 상황에 따라서 약간의 튜닝이 필요할 수도 있다.
 정해진 max/min 범위를 벗어하는 선은, 잘못 탐지된 선으로 보인다.
 그래서, 일정 기울기를 넘어서거나 또는 이하인 선들은 모두 제거하는 방식으로 수정했다.
+
+slope_max=5로 하니까, set3에서 이상한 결과가 나왔다. 좀 더 줄여보자...3으로? 2로?
 """
-slope_max = 5
+slope_max = 2
 slope_min = -1 * slope_max
 
 """
