@@ -3,7 +3,6 @@
 
 # In[ ]:
 
-
 """
 v5 파일에서 불필요한 부분을 제거하고, 꼭 필요한 코드만 남겨놓은 버전
 
@@ -12,9 +11,7 @@ Visual code 로 실행하면 오류가 났고, PowerShell에서 실행하면 이
 Type Error가 발생하면, 직전에 사용한 차선을 양쪽 모두 재사용 하는 것으로 확장
 """
 
-
 # In[1]:
-
 
 import os
 import re
@@ -24,9 +21,7 @@ from tqdm import tqdm_notebook
 import matplotlib.pyplot as plt
 import hallym_utils as hu
 
-
 # In[2]:
-
 
 """
 각종 경로 설정하기
@@ -35,15 +30,18 @@ version = '5'
 
 #dataset = 'set1'
 #dataset = 'set2'
-dataset = 'set3'
+#dataset = 'set3'
 #dataset = 'set4'
-#dataset = 'set5'
+dataset = 'set5'
+dataset_default = ['set1','set2','set3','set4','set5']
+
+# seoul driving dataset
+#dataset = 'set1001'
+dataset_seoul = ['set1001']
 
 dir_path_img_frames_read, dir_path_img_frames_write, dir_path_video_out, video_out_filename = hu.set_paths(version, dataset)
 
-
 # In[3]:
-
 
 """
 주요 파라미터 설정하기
@@ -70,10 +68,20 @@ mask 내부의 그림만 이용해서 차선을 탐지할 것이다. 이때 fram
 설정하기 위해서 frame 왼쪽의 하단, 상단, 그리고 frame 오른쪽의 상단, 하단의 좌표를
 아래와 같이 설정하였다.
 """
-mask_left_bottom = hu.mask_left_bottom
-mask_left_top = hu.mask_left_top
-mask_right_top = hu.mask_right_top
-mask_right_bottom = hu.mask_right_bottom
+if dataset in dataset_default:
+    # driving-full.mp4 영상을 사용하는 경우
+    mask_left_bottom = hu.default_mask_left_bottom
+    mask_left_top = hu.default_mask_left_top
+    mask_right_top = hu.default_mask_right_top
+    mask_right_bottom = hu.default_mask_right_bottom
+elif dataset in dataset_seoul:
+    # seoul-driving.mp4 영상을 사용하는 경우
+    mask_left_bottom = hu.seoul_mask_left_bottom
+    mask_left_top = hu.seoul_mask_left_top
+    mask_right_top = hu.seoul_mask_right_top
+    mask_right_bottom = hu.seoul_mask_right_bottom
+else:
+    assert False
 
 # 다항식에 맞춰서 fitting 할때, 몇차 다항식을 쓸건지?
 poly_degree = 2
@@ -87,12 +95,10 @@ deg-2에 poly fitting 할때, 몇개의 sample을 택할지를 정하기
 n_samples = 2+5  
 print(str(n_samples), ' 개의 샘플을 각 hough line에서 추출합니다')
 
-
 # In[4]:
 
-
 """
-Read Video Frames
+Read Video Frames (default)
 비디오 : https://www.youtube.com/watch?reload=9&v=KWJaBJYJIjI
 Frames : 비디오 촬영 영상을 연속된 이미지로 변경 해 놓은 것 (사진파일 다수)
 
@@ -102,9 +108,7 @@ Frames : 비디오 촬영 영상을 연속된 이미지로 변경 해 놓은 것
 
 col_images = hu.read_image_frames(dir_path_img_frames_read, target_height, target_width)
 
-
 # In[5]:
-
 
 # create a zero array
 # image frame중에서 아무거나 고르면 된다. 그래서 0번 인덱스를 사용했다.
@@ -140,8 +144,15 @@ prev_right_lane = hu.frame_mask_lane(mask_right_bottom, mask_right_top)
 
 for img in tqdm_notebook(col_images):  # 각각의 도로 사진에 대해서...
     masked = cv2.bitwise_and(img[:,:,0], img[:,:,0], mask=stencil)  # frame mask 적용하기
-    ret, thresh = cv2.threshold(masked, 130, 145, cv2.THRESH_BINARY)  # image thresholding 적용하기
-    lines = cv2.HoughLinesP(thresh, 1, np.pi/180, 30, maxLineGap=200)
+	
+    if dataset in dataset_default: 
+        ret, thresh = cv2.threshold(masked, hu.default_thre, hu.thre_maxval, cv2.THRESH_BINARY)  
+    elif dataset in dataset_seoul: 
+        ret, thresh = cv2.threshold(masked, hu.seoul_thre, hu.thre_maxval, cv2.THRESH_BINARY) 
+    else: assert False
+    
+    lines = cv2.HoughLinesP(image=thresh, rho=1, theta=np.pi/180, \
+	                        threshold=30, minLineLength=0, maxLineGap=200)
     dmy = img.copy()  # 원본 이미지 복사본 만들어서, 그 위에다가 탐지한 선을 그리기
 
     # Plot detected lines : 탐지한 선을 그리기!
@@ -202,8 +213,6 @@ for img in tqdm_notebook(col_images):  # 각각의 도로 사진에 대해서...
             right_lane = prev_right_lane
             right_xs = right_lane(y_values)
             
-        
-        
     except TypeError: 
         #cv2.imwrite(dir_path_img_frames_write+str(cnt)+'.png',img)  # 원본 그림 저장
         print('Hough가 왼쪽 차선 탐지 못해서 직전 차선 사용 ... at : ', cnt)
@@ -253,9 +262,7 @@ for img in tqdm_notebook(col_images):  # 각각의 도로 사진에 대해서...
 
 print('done, processed image count : ', cnt)
 
-
 # In[7]:
-
 
 """
 차선 탐지된 이미지를 묶어서 비디오로 만들기
@@ -263,9 +270,4 @@ print('done, processed image count : ', cnt)
 hu.make_video_from_images(dir_path_img_frames_write, dir_path_video_out, video_out_filename)
 print('done')
 
-
-# In[ ]:
-
-
 # THE END
-

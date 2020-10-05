@@ -13,6 +13,15 @@ import cv2
 target_height = 270
 target_width = 480
 
+
+"""
+cv2.threshold 에서 사용할 임계값
+"""
+default_thre=130
+seoul_thre=130
+thre_maxval = 145
+#thre_maxval = 255
+
 """
 <입력 영상에 따라서 튜닝이 필요한 부분이다. 카메라가 도로를 어떤 각도에서 바라보고 있는지에
 따라서 Frame Mask를 다르게 설정해야 한다.>
@@ -22,10 +31,20 @@ mask 내부의 그림만 이용해서 차선을 탐지할 것이다. 이때 fram
 설정하기 위해서 frame 왼쪽의 하단, 상단, 그리고 frame 오른쪽의 상단, 하단의 좌표를
 아래와 같이 설정하였다.
 """
-mask_left_bottom = [0, target_height]
-mask_left_top = [220, 160]
-mask_right_top = [360, 160]
-mask_right_bottom = [target_width, target_height]
+#mask_left_bottom = [0, target_height]
+#mask_left_top = [220, 160]
+#mask_right_top = [360, 160]
+#mask_right_bottom = [target_width, target_height]
+default_mask_left_bottom = [0, target_height]
+default_mask_left_top = [220, 160]
+default_mask_right_top = [360, 160]
+default_mask_right_bottom = [target_width, target_height]
+
+k_alpha, k_beta, k_gamma = 50, min([210,int(target_width/2)]), 0.6
+seoul_mask_left_bottom = [k_alpha, target_height]
+seoul_mask_left_top = [k_beta, int(target_height * k_gamma)]
+seoul_mask_right_top = [target_width-k_beta, int(target_height * k_gamma)]
+seoul_mask_right_bottom = [target_width-k_alpha, target_height]
 
 """
 <입력 영상에 따라서 튜닝이 필요할 수도 있는 부분이다.>

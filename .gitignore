@@ -16,7 +16,7 @@ __pycache__
 
 # too large files are not allowed to be uploaded to the git repo
 resource/driving-full.mp4
-resource/set2/*.mp4
+resource/seoul-driving.mp4
 *.mp4
 
 # End of https://www.toptal.com/developers/gitignore/api/jupyternotebooks

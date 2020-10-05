@@ -30,9 +30,14 @@ version = '4'
 
 #dataset = 'set1'
 #dataset = 'set2'
-dataset = 'set3'
+#dataset = 'set3'
 #dataset = 'set4'
-#dataset = 'set5'
+dataset = 'set5'
+dataset_default = ['set1','set2','set3','set4','set5']
+
+# seoul driving dataset
+#dataset = 'set1001'
+dataset_seoul = ['set1001']
 
 dir_path_img_frames_read, dir_path_img_frames_write, dir_path_video_out, video_out_filename = hu.set_paths(version, dataset)
 
@@ -63,20 +68,29 @@ mask 내부의 그림만 이용해서 차선을 탐지할 것이다. 이때 fram
 설정하기 위해서 frame 왼쪽의 하단, 상단, 그리고 frame 오른쪽의 상단, 하단의 좌표를
 아래와 같이 설정하였다.
 """
-mask_left_bottom = hu.mask_left_bottom
-mask_left_top = hu.mask_left_top
-mask_right_top = hu.mask_right_top
-mask_right_bottom = hu.mask_right_bottom
+if dataset in dataset_default:
+    # driving-full.mp4 영상을 사용하는 경우
+    mask_left_bottom = hu.default_mask_left_bottom
+    mask_left_top = hu.default_mask_left_top
+    mask_right_top = hu.default_mask_right_top
+    mask_right_bottom = hu.default_mask_right_bottom
+elif dataset in dataset_seoul:
+    # seoul-driving.mp4 영상을 사용하는 경우
+    mask_left_bottom = hu.seoul_mask_left_bottom
+    mask_left_top = hu.seoul_mask_left_top
+    mask_right_top = hu.seoul_mask_right_top
+    mask_right_bottom = hu.seoul_mask_right_bottom
+else:
+    assert False
 
 # 다항식에 맞춰서 fitting 할때, 몇차 다항식을 쓸건지?
 poly_degree = 1
 print(str(poly_degree), ' 차 다항식에 fitting 합니다.')
 
-
 # In[5]:
 
 """
-Read Video Frames
+Read Video Frames (default)
 비디오 : https://www.youtube.com/watch?reload=9&v=KWJaBJYJIjI
 Frames : 비디오 촬영 영상을 연속된 이미지로 변경 해 놓은 것 (사진파일 다수)
 
@@ -94,8 +108,8 @@ stencil = np.zeros_like(col_images[0][:,:,0])
 
 # specify coordinates of the polygon
 # 촬영한 영상에 따라서 다각형의 형태를 조절할 필요가 있겠다.
-polygon = np.array([mask_left_bottom, mask_left_top, mask_right_top, mask_right_bottom])  # v1에서 사용한 값
-
+polygon = np.array([mask_left_bottom, mask_left_top, mask_right_top, mask_right_bottom])  
+	
 # fill polygon with ones
 cv2.fillConvexPoly(stencil, polygon, 1)
 
@@ -118,15 +132,20 @@ prev_left_lane = hu.frame_mask_lane(mask_left_bottom, mask_left_top)
 prev_right_lane = hu.frame_mask_lane(mask_right_bottom, mask_right_top)
 
 for img in tqdm_notebook(col_images):  # 각각의 도로 사진에 대해서...
-    """
-    if cnt not in [220,221,222,223,224,225]:
-        cnt += 1
-        continue
-    """
-        
+       
     masked = cv2.bitwise_and(img[:,:,0], img[:,:,0], mask=stencil)  # frame mask 적용하기
-    ret, thresh = cv2.threshold(masked, 130, 145, cv2.THRESH_BINARY)  # image thresholding 적용하기
-    lines = cv2.HoughLinesP(thresh, 1, np.pi/180, 30, maxLineGap=200)
+	
+    # 이미지 thresholding 적용하기
+    # opencv-python.readthedocs.io/en/latest/doc/09.imageThresholding/imageThresholding.html
+	
+    if dataset in dataset_default: 
+        ret, thresh = cv2.threshold(masked, hu.default_thre, hu.thre_maxval, cv2.THRESH_BINARY)  
+    elif dataset in dataset_seoul: 
+        ret, thresh = cv2.threshold(masked, hu.seoul_thre, hu.thre_maxval, cv2.THRESH_BINARY) 
+    else: assert False
+
+    lines = cv2.HoughLinesP(image=thresh, rho=1, theta=np.pi/180, \
+	                        threshold=30, minLineLength=0, maxLineGap=200)
     dmy = img.copy()  # 원본 이미지 복사본 만들어서, 그 위에다가 탐지한 선을 그리기
 
     # Plot detected lines : 탐지한 선을 그리기!
@@ -242,3 +261,5 @@ print('done, processed image count : ', cnt)
 """
 hu.make_video_from_images(dir_path_img_frames_write, dir_path_video_out, video_out_filename)
 print('done')
+
+# THE END
